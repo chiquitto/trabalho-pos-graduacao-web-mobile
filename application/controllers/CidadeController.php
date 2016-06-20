@@ -1,0 +1,95 @@
+<?php
+
+class CidadeController extends Blog_Controller_Action {
+
+    public function indexAction() {
+        $tab = new Application_Model_DbTable_Cidade();
+        $cidades = $tab->fetchAll(null,'idCidade desc')->toArray();
+        $this->view->cidades = $cidades;
+    }
+
+    public function createAction() {
+        $frm = new Application_Form_Cidade();
+        
+        if($this->getRequest()->isPost()){
+            $params = $this->getAllParams();
+            
+            if($frm->isValid($params)){
+                $params = $frm->getValues();
+                
+                $vo = new Application_Model_Vo_Cidade();
+                $vo->setCidade($params['cidade']);
+                $vo->setPopulacao($params['populacao']);
+                $vo->setIdestado($params['idestado']);
+                $vo->setIdadmin($dados->idadmin);
+                
+                $model = new Application_Model_Cidade();
+                $model->salvar($vo);
+                
+                $flash = $this->_helper->FlashMessenger;
+                $flash->addMessage('Registro salvo');
+                
+                $this->_helper->Redirector->gotoSimpleAndExit('index');
+            }
+        }
+        
+        $this->view->form = $frm;
+    }
+
+    public function deleteAction() {
+        $idcidade = (int) $this->getParam('idcidade');
+        $model = new Application_Model_Cidade();
+        $flash = $this->_helper->FlashMessenger;
+        
+        try {
+            $model->apagar($idcidade);
+            $flash->addMessage('Registro Apagado');
+        } catch (Exception $exc) {
+            $flash->addMessage($exc->getMessage());
+        }
+        
+        $this->_helper->Redirector->gotoSimpleAndExit('index');
+      }
+
+    public function updateAction() {
+        $idCidade = (int) $this->getParam('idcidade');
+        $tab = new Application_Model_DbTable_Cidade();
+        $row = $tab->fetchRow('idcidade = ' . $idCidade);
+        
+        if($row === null){
+            echo 'Registro inexistente';
+            exit;
+        }
+        
+        $frm = new Application_Form_Cidade();
+        
+        if($this->getRequest()->isPost()){
+            $params = $this->getAllParams();
+            
+            if($frm->isValid($params)){
+                $params = $frm->getValues();
+                
+                $vo = new Application_Model_Vo_Cidade();
+                $vo->setCidade($params['cidade']);
+                $vo->setPopulacao($params['populacao']);
+                $vo->setIdestado($params['idestado']);
+                $vo->setIdadmin($dados->idadmin);
+                
+                $model = new Application_Model_Cidade();
+                $model->atualizar($vo);
+                
+                $flash = $this->_helper->FlashMessenger;
+                $flash->addMessage('Registro atualizado');
+                
+                $this->_helper->Redirector->gotoSimpleAndExit('index');
+            }
+        }else{
+            $frm->populate(array(
+               'cidade' => $row->cidade 
+            ));
+        }
+        
+        $this->view->form = $frm;
+    }
+
+}
