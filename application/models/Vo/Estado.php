@@ -4,7 +4,8 @@ class Application_Model_Vo_Estado{
     
     private $idestado;
     private $sigla_estado;
-    private $estado;
+    private $nome_estado;
+    private $id_admin;
     
     function getIdestado() {
         return $this->idestado;
@@ -14,8 +15,8 @@ class Application_Model_Vo_Estado{
         return $this->sigla_estado;
     }
     
-    function getEstado() {
-        return $this->estado;
+    function getNomeEstado() {
+        return $this->nome_estado;
     }
 
     function setIdestado($idestado) {
@@ -26,8 +27,16 @@ class Application_Model_Vo_Estado{
         $this->sigla_estado = $sigla_estado;
     }
     
-    function setEstado($estado) {
-        $this->estado = $estado;
+    function setNomeEstado($nome_estado) {
+        $this->nome_estado = $nome_estado;
     }
+    
+    function getIdAdmin() {
+        return $this->id_admin;
+    }
+
+    function setIdAdmin($id_admin) {
+        $this->id_admin = $id_admin;
+    }    
 
 }

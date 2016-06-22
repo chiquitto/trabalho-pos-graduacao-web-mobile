@@ -24,7 +24,7 @@ class Application_Form_Estado extends Zend_Form {
         ));
         
         $estado->addValidator(new Zend_Validate_StringLength(array(
-            'min' => 30
+            'min' => 4
         )));
         
         $estado->addFilter(new Zend_Filter_StringToUpper);

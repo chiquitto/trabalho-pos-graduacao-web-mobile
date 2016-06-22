@@ -19,7 +19,9 @@ class EstadoController extends Blog_Controller_Action {
                 
                 $vo = new Application_Model_Vo_Estado();
                 $vo->setSiglaEstado($params['sigla_estado']);
-                $vo->setEstado($params['estado']);
+                $vo->setNomeEstado($params['nome_estado']);
+                // FIXME
+                $vo->setIdadmin(0);
                 
                 $model = new Application_Model_Estado();
                 $model->salvar($vo);
@@ -69,7 +71,7 @@ class EstadoController extends Blog_Controller_Action {
                 
                 $vo = new Application_Model_Vo_Estado();
                 $vo->setSiglaEstado($params['sigla_estado']);
-                $vo->setEstado($params['estado']);
+                $vo->setNomeEstado($params['nome_estado']);
                 $vo->setIdestado($idestado);
                 
                 $model = new Application_Model_Estado();

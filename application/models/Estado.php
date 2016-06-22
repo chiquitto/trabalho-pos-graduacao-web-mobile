@@ -20,7 +20,8 @@ class Application_Model_Estado {
         $tab = new Application_Model_DbTable_Estado();
         $tab->update(array(
             'sigla_estado' => $estado->getSiglaEstado(),
-            'nome_estado' => $estado->getEstado()
+            'nome_estado' => $estado->getNomeEstado(),
+            'idadmin' => $estado->getIdadmin()
         ), 'idestado = ' . $estado->getIdestado());
         
         return true;
@@ -30,7 +31,8 @@ class Application_Model_Estado {
         $tab = new Application_Model_DbTable_Estado();
         $tab->insert(array(
             'sigla_estado' => $estado->getSiglaEstado(),
-            'nome_estado' => $estado->getEstado()
+            'nome_estado' => $estado->getNomeEstado(),
+            'idadmin' => $estado->getIdadmin()
         ));
         
         $estado->setIdestado($tab->getAdapter()->lastInsertId());
