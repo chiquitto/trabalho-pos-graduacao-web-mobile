@@ -5,21 +5,28 @@
 <ul>
     <?php foreach ($this->estados as $estado) { ?>
       <li>
-        <a href="<?php echo $this->url(array('action' => 'estado', 'idestado' => $post['idestado'])); ?>"></a>
+        <a href="<?php echo $this->url(array('action' => 'estado', 'idestado' => $post['idestado'])); ?>">
+            <?php echo $estado['sigla_estado'] ?> - <?php echo $estado['nome_estado'] ?>
+        </a>
       </li>
   <?php } ?>
 </ul>
 
 <h1>Cidades</h1>
-<h2>Deixar em forma de tabelas com opção de apagar e editar somente as cidades (e as populações)</h2>
-<ul>
+<h2>As ações de apagar e editar não estão funcionando ainda</h2>
+<table border="1">
     <?php foreach ($this->cidades as $cidade) { ?>
-      <li>
-        <a href="<?php echo $this->url(array(
-            'action' => 'cidade', 
-            'idcidade' => $cidade['idcidade'])); ?>">
-            <?php echo $cidade['sigla_estado'] ?> - <?php echo $cidade['nome_cidade'] ?> - 
-                <?php echo $cidade['populacao'] ?></a>
-      </li>
+      <tr>
+          <td><?php echo $cidade['sigla_estado'] ?></td>
+          <td><?php echo $cidade['nome_cidade'] ?></td>
+          <td><?php echo $cidade['populacao'] ?></td>
+          <td><a href="<?php echo $this->url(array(
+                'action' => 'cidade', 
+              'idcidade' => $cidade['idcidade'])); ?>">Editar</a></td>
+          <td><a href="<?php echo $this->url(array(
+                'action' => 'cidade', 
+              'idcidade' => $cidade['idcidade'])); ?>">Apagar</a></td>
+            
+      </tr>
   <?php } ?>
-</ul>
+</table>

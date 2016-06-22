@@ -5,12 +5,11 @@ class IndexController extends Blog_Controller_Action {
     public function indexAction() {
         $tabela_estado = new Application_Model_DbTable_Estado();
         $estados = $tabela_estado->fetchAll(null, 'sigla_estado')->toArray();
+        $this->view->estados = $estados;
         
         $select = $this->consulta();
         $select->order('nome_cidade desc');
         $cidades = $select->query()->fetchAll();
-        
-        $this->view->estados = $estados;
         $this->view->cidades = $cidades;
         
         $usuario = $this->getAuthRole();
