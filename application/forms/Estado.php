@@ -12,18 +12,19 @@ class Application_Form_Estado extends Zend_Form {
         
         $sigla_estado->addFilter(new Zend_Filter_StringToUpper);
         $sigla_estado->addValidator(new Zend_Validate_StringLength(array(
-            'min' => 2
+            'min' => 2,
+            'max' => 2
         )));
         
         $this->addElement($sigla_estado);
         
-        $estado = new Zend_Form_Element_Text('estado', array(
+        $estado = new Zend_Form_Element_Text('nome_estado', array(
             'label' => 'Nome do Estado',
             'required' => true
         ));
         
         $estado->addValidator(new Zend_Validate_StringLength(array(
-            'min' => 20
+            'min' => 30
         )));
         
         $estado->addFilter(new Zend_Filter_StringToUpper);

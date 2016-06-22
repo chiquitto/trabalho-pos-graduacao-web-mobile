@@ -3,25 +3,21 @@
 class IndexController extends Blog_Controller_Action {
 
     public function indexAction() {
+        $tabela_estado = new Application_Model_DbTable_Estado();
+        $estados = $tabela_estado->fetchAll(null, 'sigla_estado')->toArray();
+        
         $select = $this->consulta();
-        $select->order('idpost desc');
+        $select->order('nome_cidade desc');
+        $cidades = $select->query()->fetchAll();
         
-        $idcategoria = (int)$this->getParam('idcategoria');
-        if($idcategoria > 0){
-            $select->where('p.idcategoria = '.$idcategoria);
-        }
-        $posts = $select->query()->fetchAll();
+        $this->view->estados = $estados;
+        $this->view->cidades = $cidades;
         
-        if(!$posts){
-            throw new Zend_Controller_Action_Exception();
-        }
-        
-        $this->view->posts = $posts;
         $usuario = $this->getAuthRole();
         $this->view->usuario = $usuario;
     }
 
-    public function categoriasAction() {
+    public function estadoAction() {
         $tab = new Application_Model_DbTable_Categoria();
         $categorias = $tab->fetchAll(null,'idCategoria')->toArray();
         $this->view->categorias = $categorias;
@@ -44,8 +40,8 @@ class IndexController extends Blog_Controller_Action {
     private function consulta(){
         $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
         $select = $dbAdapter->select()
-                ->from(array('p' => 'post'),array('idpost','titulo','texto'))
-                ->joinInner(array('c' => 'categoria'), 'c.idcategoria = p.idcategoria',array('categoria'));
+                ->from(array('c' => 'cidade'), array('nome_cidade', 'populacao'))
+                ->joinInner(array('e' => 'estado'), 'e.idestado = c.idestado', array('sigla_estado', 'nome_estado'));
         
         return $select;
     }

@@ -9,26 +9,28 @@ class Application_Model_Cidade {
         return true;
     }
 
-    public function atualizar(Application_Model_Vo_Categoria $categoria) {
-        //instanciando a classe que representa a tabela no BD
-        $tab = new Application_Model_DbTable_Categoria();
+    public function atualizar(Application_Model_Vo_Cidade $cidade) {
+        $tab = new Application_Model_DbTable_Cidade();
         
-        //atualizando um registro na tabela categoria
         $tab->update(array(
-            'categoria' => $categoria->getCategoria()
-        ), 'idcategoria = '.$categoria->getIdcategoria());
+            'nome_cidade' => $cidade->getCidade(),
+            'idestado' => $cidade->getIdestado(),
+            'populacao' => $cidade->getPopulacao()
+        ), 'idcidade = ' . $cidade->getIdcidade());
         
         return true;
     }
 
-    public function salvar(Application_Model_Vo_Categoria $categoria) {
-        //instanciando a classe que representa a tabela no BD.
-        $tab = new Application_Model_DbTable_Categoria();
+    public function salvar(Application_Model_Vo_Cidade $cidade) {
+        $tab = new Application_Model_DbTable_Cidade();
         $tab->insert(array(
-            'categoria' => $categoria->getCategoria()
+            'nome_cidade' => $cidade->getCidade(),
+            'populacao' => $cidade->getPopulacao(),
+            'idestado' => $cidade->getIdestado(),
+            'idadmin' => $cidade->getIdadmin(),
         ));
         
-        $categoria->setIdcategoria($tab->getAdapter()->lastInsertId());
+        $cidade->setIdcidade($tab->getAdapter()->lastInsertId());
         
         return true;
     }

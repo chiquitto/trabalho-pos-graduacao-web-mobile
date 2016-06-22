@@ -1,11 +1,25 @@
 <p>Bem vindo, <?php echo $this->usuario ?></p>
 
-<h1>Posts</h1>
-
+<h1>Estados</h1>
+<h2>Ao clicar em algum estado, todas as cidades relacionadas ao estado devem ser exibidas</h2>
 <ul>
-    <?php foreach ($this->posts as $post) { ?>
+    <?php foreach ($this->estados as $estado) { ?>
       <li>
-        <a href="<?php echo $this->url(array('action' => 'post', 'idpost' => $post['idpost'])); ?>"><?php echo $post['categoria']; ?>/<?php echo $post['titulo']; ?></a>
+        <a href="<?php echo $this->url(array('action' => 'estado', 'idestado' => $post['idestado'])); ?>"></a>
+      </li>
+  <?php } ?>
+</ul>
+
+<h1>Cidades</h1>
+<h2>Deixar em forma de tabelas com opção de apagar e editar somente as cidades (e as populações)</h2>
+<ul>
+    <?php foreach ($this->cidades as $cidade) { ?>
+      <li>
+        <a href="<?php echo $this->url(array(
+            'action' => 'cidade', 
+            'idcidade' => $cidade['idcidade'])); ?>">
+            <?php echo $cidade['sigla_estado'] ?> - <?php echo $cidade['nome_cidade'] ?> - 
+                <?php echo $cidade['populacao'] ?></a>
       </li>
   <?php } ?>
 </ul>

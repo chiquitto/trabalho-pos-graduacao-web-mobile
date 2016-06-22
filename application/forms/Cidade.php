@@ -5,40 +5,57 @@ class Application_Form_Cidade extends Zend_Form {
     public function init() {
         $this->setMethod('post');
         
-        $categoria = new Zend_Form_Element_Select('idestado',array(
+        $estado = new Zend_Form_Element_Select('idestado',array(
             'label' => 'Estado',
             'required' => true
         ));
         
-        $categoria->setMultiOptions($this->estados());
-        //converte valores inteiros 0 em valores null
-        $categoria->addFilter(new Zend_Filter_Null());
-        $this->addElement($categoria);
+        $estado->setMultiOptions($this->estados())
+                ->addFilter(new Zend_Filter_Null());
         
-        $titulo = new Zend_Form_Element_Text('titulo', array(
-            'label' => 'Titulo do Post',
+        $this->addElement($estado);
+        
+        // Campo cidade
+        $cidade = new Zend_Form_Element_Text('Nome da Cidade', array(
+            'label' => 'Nome da Cidade',
             'required' => true
         ));
-        $min10 = new Zend_Validate_StringLength(array(
-            'min' => 10
-        ));
-        $titulo->addValidator($min10);        
-        $titulo->addFilter(new Zend_Filter_StringToUpper);
-        $this->addElement($titulo);
         
-        $texto = new Zend_Form_Element_Textarea('texto',array(
-            'label' => 'Conteudo',
+        $validator_cidade = new Zend_Validate_StringLength(array(
+            'min' => 10,
+            'max' => 100
+        ));
+        
+        $cidade->addValidator($validator_cidade)
+                ->addFilter(new Zend_Filter_StringToUpper)
+                ->addElement($cidade);
+        
+        // Campo população
+        $populacao = new Zend_Form_Element_Text('populacao', array(
+            'label' => 'População',
             'required' => true
         ));
-        $this->addElement($texto);
+        
+        $validator_populacao = array (
+            'populacao' => array (
+                'Digits',
+                new Zend_Validate_Int(),
+                array ('Between', 1, 99999999999999)
+            )
+        );
+        
+        $populacao->addValidator($validator_populacao);
+        
+        $this->addElement($populacao);
         
         $submit = new Zend_Form_Element_Submit('submit',array(
             'label' => 'Salvar'
         ));
+        
         $this->addElement($submit);
     }
     
-    private function categorias(){
+    private function estados(){
         $tab = new Application_Model_DbTable_Estado();
         $estados = $tab->fetchAll(null,'idestado');
         
@@ -47,11 +64,9 @@ class Application_Form_Cidade extends Zend_Form {
         );
         
         foreach ($estados as $estado){
-            // paramos aqui
-            $r[$categoria->idcategoria] = $categoria->categoria;
+            $r[$estado->idestado] = $estado->sigla_estado;
         }
         
-        //retorna o array com as categorias
         return $r;
     }
 

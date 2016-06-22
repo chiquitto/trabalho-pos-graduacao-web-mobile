@@ -7,21 +7,20 @@ class Application_Model_Estado {
         $cidades = $tabela_cidade->fetchRow('idestado = ' . $idestado);
         
         if($cidades !== null){
-            throw new Exception('Existe cidades cadastradas para esse estado', 1);
+            throw new Exception('Existem cidades cadastradas para esse estado', 1);
         }
         
         $tabela_estado = new Application_Model_DbTable_Estado();
         $tabela_estado->delete('idestado = ' . $idestado);
         
         return true;
-        
     }
 
     public function atualizar(Application_Model_Vo_Estado $estado) {
         $tab = new Application_Model_DbTable_Estado();
         $tab->update(array(
             'sigla_estado' => $estado->getSiglaEstado(),
-            'estado' => $estado->getEstado()
+            'nome_estado' => $estado->getEstado()
         ), 'idestado = ' . $estado->getIdestado());
         
         return true;
@@ -31,7 +30,7 @@ class Application_Model_Estado {
         $tab = new Application_Model_DbTable_Estado();
         $tab->insert(array(
             'sigla_estado' => $estado->getSiglaEstado(),
-            'estado' => $estado->getEstado()
+            'nome_estado' => $estado->getEstado()
         ));
         
         $estado->setIdestado($tab->getAdapter()->lastInsertId());
