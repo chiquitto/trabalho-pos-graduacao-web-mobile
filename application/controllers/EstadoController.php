@@ -73,6 +73,7 @@ class EstadoController extends Blog_Controller_Action {
                 $vo->setSiglaEstado($params['sigla_estado']);
                 $vo->setNomeEstado($params['nome_estado']);
                 $vo->setIdestado($idestado);
+                $vo->setIdAdmin(0);
                 
                 $model = new Application_Model_Estado();
                 $model->atualizar($vo);

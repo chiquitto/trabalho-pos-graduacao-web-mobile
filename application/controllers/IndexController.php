@@ -17,9 +17,14 @@ class IndexController extends Blog_Controller_Action {
     }
 
     public function estadoAction() {
-        $tab = new Application_Model_DbTable_Categoria();
-        $categorias = $tab->fetchAll(null,'idCategoria')->toArray();
-        $this->view->categorias = $categorias;
+        $tab = new Application_Model_DbTable_Estado();
+        $idestado = (int) $this->getParam('idestado');
+        $estado = $tab->fetchRow('idestado = ' . $idestado);
+        $this->view->estado = $estado;
+        
+        $tabela_cidade = new Application_Model_DbTable_Cidade();
+        $cidades = $tabela_cidade->fetchAll('idestado = ' . $idestado, 'populacao desc')->toArray();
+        $this->view->cidades = $cidades;
     }
 
     public function postAction() {
@@ -32,8 +37,8 @@ class IndexController extends Blog_Controller_Action {
         if(!$post){
             throw new Zend_Controller_Action_Exception();
         }
-        $this->view->post = $post;
         
+        $this->view->post = $post;
     }
     
     private function consulta(){
