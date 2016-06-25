@@ -1,6 +1,10 @@
 <h2>Estado</h2>
 
-<h3><?php echo $this->estado['sigla_estado']; ?> - <?php echo $this->estado['nome_estado']; ?></h3>
+<h3>
+    <?php echo $this->estado['sigla_estado']; ?> - 
+    <?php echo $this->estado['nome_estado']; ?>
+</h3>
+
 <table border="1">
     <?php foreach ($this->cidades as $cidade) { ?>
     <tr>
@@ -9,6 +13,3 @@
     </tr>
     <?php } ?>
 </table>
-
-<br />
-<a href="<?php $this->url(array('action' => 'index')); ?>">Voltar</a>
