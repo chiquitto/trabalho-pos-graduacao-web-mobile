@@ -5,12 +5,14 @@ class CidadeController extends Blog_Controller_Action {
     public function indexAction() {
         $adapter = Zend_Db_Table_Abstract::getDefaultAdapter();
         $select = $adapter->select();
-        $select->from(array('c' => 'cidade'), array('nome_cidade', 'populacao'))
+        $select->from(array('c' => 'cidade'), array('idcidade', 'nome_cidade', 'populacao'))
                ->joinInner(array('e' => 'estado'), 'c.idestado = e.idestado', array('sigla_estado'))
                ->order('nome_cidade asc');
         
         $cidades = $select->query()->fetchAll();
         $this->view->cidades = $cidades;
+        $this->podeApagar = $this->aclIsAllowed('cidade', 'delete');
+        $this->podeEditar = $this->aclIsAllowed('cidade', 'update');
     }
 
     public function createAction() {
@@ -23,10 +25,10 @@ class CidadeController extends Blog_Controller_Action {
                 $params = $frm->getValues();
                 
                 $vo = new Application_Model_Vo_Cidade();
-                $vo->setCidade($params['cidade']);
+                $vo->setCidade($params['nome_cidade']);
                 $vo->setPopulacao($params['populacao']);
                 $vo->setIdestado($params['idestado']);
-                $vo->setIdadmin($dados->idadmin);
+                $vo->setIdadmin(0);
                 
                 $model = new Application_Model_Cidade();
                 $model->salvar($vo);
@@ -75,10 +77,11 @@ class CidadeController extends Blog_Controller_Action {
                 $params = $frm->getValues();
                 
                 $vo = new Application_Model_Vo_Cidade();
-                $vo->setCidade($params['cidade']);
+                $vo->setCidade($params['nome_cidade']);
                 $vo->setPopulacao($params['populacao']);
                 $vo->setIdestado($params['idestado']);
-                $vo->setIdadmin($dados->idadmin);
+                $vo->setIdadmin(0);
+                $vo->setIdcidade($idCidade);
                 
                 $model = new Application_Model_Cidade();
                 $model->atualizar($vo);
@@ -88,9 +91,11 @@ class CidadeController extends Blog_Controller_Action {
                 
                 $this->_helper->Redirector->gotoSimpleAndExit('index');
             }
-        }else{
+        } else {
             $frm->populate(array(
-               'cidade' => $row->cidade 
+               'nome_cidade' => $row->nome_cidade,
+               'populacao' => $row->populacao,
+               'idestado' => $row->idestado,
             ));
         }
         

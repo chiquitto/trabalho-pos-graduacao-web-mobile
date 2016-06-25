@@ -1,7 +1,6 @@
 <p>Bem vindo, <?php echo $this->usuario ?></p>
 
-<h1>Estados</h1>
-<h2>Ao clicar em algum estado, todas as cidades relacionadas ao estado devem ser exibidas</h2>
+<h2>Estados</h2>
 <ul>
     <?php foreach ($this->estados as $estado) { ?>
       <li>
@@ -12,21 +11,22 @@
   <?php } ?>
 </ul>
 
-<h1>Cidades</h1>
-<h2>As ações de apagar e editar não estão funcionando ainda e elas não devem aparecer pra quem for diferente de admin</h2>
+<h2>Cidades</h2>
 <table border="1">
+    <thead>
+        <tr>
+          <td>Estado</td>
+          <td>Cidade</td>
+          <td>População</td>
+        </tr>
+    </thead>
+    <tbody>
     <?php foreach ($this->cidades as $cidade) { ?>
       <tr>
           <td><?php echo $cidade['sigla_estado'] ?></td>
           <td><?php echo $cidade['nome_cidade'] ?></td>
-          <td><?php echo $cidade['populacao'] ?></td>
-          <td><a href="<?php echo $this->url(array(
-                'action' => 'cidade', 
-              'idcidade' => $cidade['idcidade'])); ?>">Editar</a></td>
-          <td><a href="<?php echo $this->url(array(
-                'action' => 'cidade', 
-              'idcidade' => $cidade['idcidade'])); ?>">Apagar</a></td>
-            
+          <td><?php echo $cidade['populacao'] ?></td>            
       </tr>
   <?php } ?>
+    </tbody>
 </table>
