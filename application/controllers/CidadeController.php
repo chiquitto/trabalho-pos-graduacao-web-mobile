@@ -3,8 +3,13 @@
 class CidadeController extends Blog_Controller_Action {
 
     public function indexAction() {
-        $tab = new Application_Model_DbTable_Cidade();
-        $cidades = $tab->fetchAll(null,'idCidade desc')->toArray();
+        $adapter = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $select = $adapter->select();
+        $select->from(array('c' => 'cidade'), array('nome_cidade', 'populacao'))
+               ->joinInner(array('e' => 'estado'), 'c.idestado = e.idestado', array('sigla_estado'))
+               ->order('nome_cidade asc');
+        
+        $cidades = $select->query()->fetchAll();
         $this->view->cidades = $cidades;
     }
 

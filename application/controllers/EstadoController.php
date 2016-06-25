@@ -4,7 +4,7 @@ class EstadoController extends Blog_Controller_Action {
 
     public function indexAction() {
         $tab = new Application_Model_DbTable_Estado();
-        $estados = $tab->fetchAll(null,'idEstado desc')->toArray();
+        $estados = $tab->fetchAll(null,'sigla_estado asc')->toArray();
         $this->view->estados = $estados;
     }
 
@@ -20,7 +20,6 @@ class EstadoController extends Blog_Controller_Action {
                 $vo = new Application_Model_Vo_Estado();
                 $vo->setSiglaEstado($params['sigla_estado']);
                 $vo->setNomeEstado($params['nome_estado']);
-                // FIXME
                 $vo->setIdadmin(0);
                 
                 $model = new Application_Model_Estado();
@@ -85,7 +84,8 @@ class EstadoController extends Blog_Controller_Action {
             }
         } else {
             $frm->populate(array(
-               'estado' => $row->estado 
+               'sigla_estado' => $row->sigla_estado,
+               'nome_estado' => $row->nome_estado
             ));
         }
         

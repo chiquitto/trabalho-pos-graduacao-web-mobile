@@ -1,4 +1,4 @@
-<h1>Posts</h1>
+<h1>Cidades</h1>
 
 <?php $this->mensagem(); ?>
 
@@ -7,22 +7,24 @@
 <table border="1">
   <thead>
     <tr>
-      <td>#</td>
-      <td>Categoria</td>
-      <td>Titulo</td>
+      <td>Estado</td>
+      <td>Cidade</td>
+      <td>População</td>
       <td></td>
     </tr>
   </thead>
   <tbody>
-      <?php foreach ($this->posts as $post) { ?>
+      <?php foreach ($this->cidades as $cidade) { ?>
         <tr>
-          <td><?php echo $post['idpost']; ?></td>
-          <td><?php echo $post['categoria']; ?></td>
-          <td><?php echo $post['titulo']; ?></td>
+          <td><?php echo $cidade['sigla_estado']; ?></td>
+          <td><?php echo $cidade['nome_cidade']; ?></td>
+          <td><?php echo $cidade['populacao']; ?></td>
+          <!--
           <td>
             [<a href="<?php echo $this->url(array('action' => 'update', 'idpost' => $post['idpost'])); ?>">editar</a>]
             <?php if ($this->podeApagar) { ?>[<a href="<?php echo $this->url(array('action' => 'delete', 'idpost' => $post['idpost'])); ?>">apagar</a>]<?php } ?>
-          </td>
+          </td>;
+          -->
         </tr>
     <?php } ?>
   </tbody>
